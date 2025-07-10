@@ -1,0 +1,674 @@
+/* 基本設定 */
+body {
+    font-family: 'Noto Sans JP', 'M PLUS Rounded 1c', sans-serif; /* 日本語に合うNoto Sans JPを優先 */
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* メインの背景色：非常に明るいグレー */
+    color: #343a40; /* テキスト色：暗めのグレー */
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* ナビゲーションバー */
+.main-nav {
+    background-color: #ffffff; /* ナビゲーションの背景色：白 */
+    padding: 18px 0;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 影を柔らかく */
+    border-bottom: 2px solid #e0e0e0; /* 薄いボーダー */
+}
+
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.main-nav li {
+    margin: 0 25px;
+}
+
+.main-nav a {
+    color: #495057; /* リンク色：濃い目のグレー */
+    text-decoration: none;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.05em;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    /* ヘッダーメニューの変な線に関連するCSSを全て削除 */
+    /* position: relative; */
+    /* overflow: hidden; */
+}
+
+/* ヘッダーメニューの変な線に関連するCSSを全て削除 */
+/* .main-nav a::before { 
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #2ecc71;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+} */
+
+.main-nav a:hover {
+    color: #2ecc71;
+    background-color: #f0f0f0; /* ホバー時の背景色を薄いグレーに */
+}
+
+/* .main-nav a:hover::before {
+    transform: translateX(0);
+} */
+
+/* サイトヘッダー */
+.site-header {
+    background: linear-gradient(to right, #3498db, #2ecc71); /* 青からエメラルドグリーンへのグラデーション */
+    color: #fff;
+    text-align: center;
+    padding: 100px 20px 80px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* 影を柔らかく */
+    z-index: 5;
+    border-bottom: 5px solid #27ae60; /* 少し濃い緑のアクセント */
+}
+
+.site-header::before { /* 背景のグリッドパターンを削除 */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: none;
+    z-index: 1;
+}
+
+.site-header .header-content {
+    position: relative;
+    z-index: 2;
+}
+
+.site-header h1 {
+    font-family: 'M_PLUS_Rounded_1c', sans-serif; /* 丸いフォントに戻す */
+    font-size: 5em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4); /* 柔らかい影 */
+    letter-spacing: 0.08em; /* 文字間隔を調整 */
+    color: #f7f7f7;
+    animation: none; /* アニメーションを削除 */
+}
+
+.site-header .subtitle {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: #e0e0e0;
+}
+
+.site-header .warning {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.05em;
+    color: #fff; /* 白い文字に */
+    background-color: rgba(231, 76, 60, 0.9); /* 赤の背景を不透明に */
+    padding: 10px 25px;
+    display: inline-block;
+    border-radius: 25px;
+    margin-top: 30px;
+    animation: pulse 1.8s infinite ease-in-out; /* アニメーションは残す */
+    border: 2px solid #e74c3c;
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.7);
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 15px rgba(231, 76, 60, 0.7); }
+    50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(231, 76, 60, 0.9); }
+    100% { transform: scale(1); box-shadow: 0 0 15px rgba(231, 76, 60, 0.7); }
+}
+
+/* メインコンテンツ */
+.site-main {
+    max-width: 1000px; /* 前の幅に戻す */
+    margin: 80px auto;
+    padding: 0 25px; /* 前のパディングに戻す */
+}
+
+.section {
+    background-color: #ffffff; /* セクションの背景色：白 */
+    padding: 45px; /* パディングを調整 */
+    margin-bottom: 60px; /* セクション間のマージンを調整 */
+    border-radius: 12px; /* 角を丸く */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* 影を柔らかく */
+    border-top: 6px solid #2ecc71; /* 上部に太いアクセントライン */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.section:hover {
+    transform: translateY(-5px); /* ホバー時に少し浮き上がる */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0; /* 細い下線 */
+    position: relative;
+}
+
+.section-header::after { /* 下線アニメーションをシンプルなものに */
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 60px; /* 短いライン */
+    height: 3px;
+    background-color: #2ecc71;
+    transition: none; /* アニメーションを削除 */
+}
+
+/* ホバーアニメーションも削除 */
+/* .section:hover .section-header::after { 
+    width: 60px;
+} */
+
+.section-header .icon-heading {
+    font-size: 2.5em; /* アイコンを大きく */
+    color: #2ecc71;
+    margin-right: 15px;
+    text-shadow: none; /* 光る影を削除 */
+}
+
+.section-header h2 {
+    font-family: 'M_PLUS_Rounded_1c', sans-serif;
+    color: #2c3e50;
+    font-size: 2.6em; /* 見出しを調整 */
+    margin: 0;
+    letter-spacing: 0.02em;
+}
+
+.section p {
+    font-size: 1.15em;
+    margin-bottom: 18px;
+    color: #3f516d;
+}
+
+/* ボタン */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3498db; /* 青いボタン */
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-size: 1.15em;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    font-family: 'Noto Sans JP', sans-serif; /* フォントを戻す */
+    letter-spacing: normal;
+}
+
+.button i {
+    margin-right: 10px;
+}
+
+.button:hover {
+    background-color: #2980b9; /* 濃い青に */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    filter: none; /* 明るさ調整を削除 */
+}
+
+/* ゲーム概要セクション内のコンテンツ */
+.about-game .content-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: flex-start; /* 上揃えに戻す */
+    margin-bottom: 40px;
+}
+
+.about-game .text-block {
+    flex: 2;
+    min-width: 300px;
+    background-color: #f5f5f5; /* 明るいグレー */
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+    border-left: 3px solid #2ecc71; /* 緑のアクセント */
+}
+
+.about-game .image-block {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    min-width: 250px;
+}
+
+.about-game .responsive-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 2px solid #a5d6a7; /* 薄い緑の枠 */
+    transition: transform 0.3s ease-out;
+}
+
+.about-game .responsive-img:hover {
+    transform: scale(1.01); /* 少しだけ拡大 */
+}
+
+/* ゲームの特徴グリッド */
+.features-grid {
+    background-color: #e8f5e9; /* 薄い緑の背景 */
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid #a5d6a7;
+    margin-top: 35px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.features-grid h3 {
+    font-family: 'M_PLUS_Rounded_1c', sans-serif;
+    color: #1b5e20; /* 濃い緑の見出し */
+    font-size: 1.6em;
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    position: relative;
+    letter-spacing: normal;
+}
+
+.features-grid h3::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -8px;
+    width: 50px;
+    height: 3px;
+    background-color: #4CAF50;
+    border-radius: 5px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.feature-item {
+    background-color: #ffffff; /* カードの背景色を白に */
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #c8e6c9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+    color: #27ae60; /* 特徴アイコンの色 */
+    font-size: 2.2em;
+    margin-bottom: 12px;
+    text-shadow: none;
+}
+
+.feature-item h4 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.3em;
+    color: #343a40;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.feature-item p {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+/* 動画埋め込み */
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 25px;
+    background-color: #e9ecef; /* 明るい背景 */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 2px solid #b0c4de; /* 薄い青の枠 */
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.pv-note {
+    font-size: 0.95em;
+    color: #6c757d;
+    text-align: center;
+    margin-top: -15px;
+}
+
+.pv-note .fas {
+    margin-right: 5px;
+    color: #fd7e14; /* オレンジ色のアイコン */
+}
+
+/* フォーム埋め込み */
+.form-container {
+    background-color: #e9f5ff; /* 明るい青の背景 */
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 25px;
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #b0d8f7;
+}
+
+.form-container iframe {
+    width: 100%;
+    height: 650px;
+    border: none;
+    border-radius: 8px;
+}
+
+/* パスワード入力エリア */
+.password-input-area {
+    text-align: center;
+    margin-top: 35px;
+    margin-bottom: 25px;
+}
+
+#passwordInput {
+    padding: 14px 18px;
+    font-size: 1.15em;
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    margin-right: 15px;
+    width: 65%;
+    max-width: 350px;
+    background-color: #ffffff;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#passwordInput:focus {
+    border-color: #2980b9;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+}
+
+/* ダウンロードリンク表示エリア */
+#downloadLinkArea {
+    text-align: center;
+    margin-top: 35px;
+    padding: 25px;
+    background-color: #d4edda; /* 薄い緑の背景 */
+    border-radius: 12px;
+    border: 2px solid #28a745; /* 緑のボーダー */
+    color: #155724; /* 濃い緑の文字 */
+    font-weight: bold;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+#downloadLinkArea .success-message {
+    color: #28a745; /* 成功メッセージは緑 */
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    font-family: 'Noto Sans JP', sans-serif;
+    text-shadow: none;
+}
+
+#downloadLinkArea .button-download {
+    background-color: #2ecc71; /* ダウンロードボタンをエメラルドグリーンに */
+}
+
+#downloadLinkArea .button-download:hover {
+    background-color: #27ae60;
+}
+
+/* メッセージ表示 */
+#passwordMessage {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 8px 15px;
+    border-radius: 5px;
+    display: none; /* 初期状態で非表示に設定 */
+    background-color: rgba(255, 255, 255, 0.8); /* 白系の背景 */
+    border: 1px solid; /* 色はJSで指定 */
+}
+
+
+/* ダウンロードセクション（注意書きなど） */
+.download-note, .download-note-small {
+    font-size: 0.95em;
+    color: #6c757d;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.download-note-small {
+    font-size: 0.85em;
+    color: #888;
+}
+
+.download-note-small .fas {
+    margin-right: 5px;
+    color: #dc3545; /* 赤色のアイコン */
+}
+
+/* フッター */
+.site-footer {
+    background-color: #343a40; /* フッターの背景色：暗めのグレー */
+    color: #e0e0e0;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.95em;
+    border-top: 5px solid #3498db; /* 上線を青に */
+    margin-top: 60px;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.site-footer .social-links {
+    margin-top: 20px;
+}
+
+.site-footer .social-links a {
+    color: #ecf0f1;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s ease, transform 0.2s ease;
+    font-size: 1.1em;
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.site-footer .social-links a i {
+    margin-right: 8px;
+    font-size: 1.3em;
+}
+
+.site-footer .social-links a:hover {
+    color: #2ecc71; /* ホバー時の色を緑に */
+    transform: translateY(-2px);
+}
+
+/* レスポンシブデザイン（スマホ対応） */
+@media (max-width: 768px) {
+    .main-nav {
+        padding: 12px 0;
+    }
+    .main-nav li {
+        margin: 5px 12px;
+    }
+    .main-nav a {
+        font-size: 0.9em;
+        padding: 8px 10px;
+    }
+
+    .site-header {
+        padding: 70px 15px 60px;
+    }
+    .site-header h1 {
+        font-size: 3.2em;
+        letter-spacing: normal;
+    }
+    .site-header .subtitle {
+        font-size: 1.2em;
+    }
+    .site-header .warning {
+        font-size: 0.9em;
+        padding: 8px 20px;
+    }
+
+    .site-main {
+        margin: 50px auto;
+        padding: 0 15px;
+    }
+    .section {
+        padding: 30px;
+        margin-bottom: 50px;
+    }
+    .section-header .icon-heading {
+        font-size: 2.2em;
+    }
+    .section-header h2 {
+        font-size: 2.2em;
+    }
+    .section p {
+        font-size: 1em;
+    }
+
+    .button {
+        padding: 15px 25px;
+        font-size: 1.1em;
+        min-width: unset;
+        width: 100%;
+    }
+
+    .about-game .content-flex {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .about-game .text-block,
+    .about-game .image-block {
+        flex: none;
+        width: 100%;
+        min-width: unset;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    .feature-item {
+        padding: 20px;
+    }
+    .feature-icon {
+        font-size: 2em;
+    }
+    .feature-item h4 {
+        font-size: 1.2em;
+    }
+
+    .video-container {
+        padding-bottom: 75%;
+    }
+
+    .form-container iframe {
+        height: 600px;
+    }
+
+    .password-input-area input[type="text"] {
+        width: calc(100% - 20px);
+        margin-right: 0;
+        margin-bottom: 15px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .password-input-area button {
+        width: calc(100% - 20px);
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .site-footer {
+        padding: 40px 15px;
+    }
+    .site-footer .social-links a {
+        margin: 0 10px;
+        font-size: 1em;
+    }
+}
+
+/* さらに小さな画面（スマホ横向きなど）対応 */
+@media (max-width: 480px) {
+    .site-header h1 {
+        font-size: 2.8em;
+    }
+    .site-header .subtitle {
+        font-size: 1.1em;
+    }
+    .site-header .warning {
+        font-size: 0.85em;
+        padding: 6px 15px;
+    }
+    .main-nav li {
+        margin: 5px 8px;
+    }
+    .main-nav a {
+        font-size: 0.9em;
+        padding: 5px 8px;
+    }
+    .section {
+        padding: 25px;
+    }
+    .section-header h2 {
+        font-size: 2em;
+    }
+    .section p {
+        font-size: 1em;
+    }
+    .password-input-area input[type="text"],
+    .password-input-area button {
+        font-size: 1em;
+    }
+}
