@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ゆ虐ゲーム - 公式サイト</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M_PLUS_Rounded_1c:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="#about-game">ゲーム概要</a></li>
+            <li><a href="#pv-section">PV</a></li>
+            <li><a href="#password-application">パスワード発行</a></li>
+            <li><a href="#download-section">ダウンロード</a></li>
+        </ul>
+    </nav>
+
+    <header class="site-header">
+        <div class="header-content">
+            <h1>ゆ虐ゲーム</h1>
+            <p class="subtitle">―― 幸福と絶望の狭間で紡がれる物語 ――</p>
+            <p class="warning"><i class="fas fa-exclamation-triangle"></i> 本ゲームは残酷な表現を含みます。苦手な方はご遠慮ください。</p>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <section class="section about-game" id="about-game">
+            <div class="section-header">
+                <i class="fas fa-gamepad icon-heading"></i>
+                <h2>ゲーム概要</h2>
+            </div>
+            <div class="content-flex">
+                <div class="text-block">
+                    <p>「ゆ虐ゲーム」は、愛らしいゆっくり達の生態に触れ、彼らの**儚くも鮮烈な一生**を追体験するインタラクティブノベルです。プレイヤーの選択一つ一つが、ゆっくり達の幸福と絶望、そして残酷な運命を決定づけます。</p>
+                    <p>単なる育成シミュレーションに留まらず、深いストーリーラインと多岐にわたるエンディングが、あなたの心を揺さぶります。彼らの世界の「真実」を、あなたの手で解き明かしてください。</p>
+                </div>
+                <div class="image-block">
+                    <img src="https://via.placeholder.com/400x250/A5D6A7/FFFFFF?text=Game+Screenshot" alt="ゲームのスクリーンショット" class="responsive-img">
+                </div>
+            </div>
+            <div class="features-grid">
+                <h3>ゲームの特徴</h3>
+                <div class="feature-item">
+                    <i class="fas fa-hand-holding-heart feature-icon"></i>
+                    <h4>多岐にわたる物語</h4>
+                    <p>あなたの選択で運命が分岐。数多のエンディングが待つ。</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-palette feature-icon"></i>
+                    <h4>独特のアートスタイル</h4>
+                    <p>美麗かつ退廃的な世界観を表現するグラフィック。</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-brain feature-icon"></i>
+                    <h4>深い哲学と倫理</h4>
+                    <p>生命の価値と選択の重みを問う、考察の余地。</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-headset feature-icon"></i>
+                    <h4>心に残るサウンド</h4>
+                    <p>感情を揺さぶるオリジナルBGMが物語を彩る。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section pv-section" id="pv-section">
+            <div class="section-header">
+                <i class="fas fa-video icon-heading"></i>
+                <h2>プロモーションビデオ</h2>
+            </div>
+            <div class="video-container">
+                </div>
+            <p class="pv-note"><i class="fas fa-info-circle"></i> PVにはゲームの一部、衝撃的なシーンが含まれる可能性があります。ご視聴の際はご注意ください。</p>
+        </section>
+
+        <section class="section password-application" id="password-application">
+            <div class="section-header">
+                <i class="fas fa-key icon-heading"></i>
+                <h2>パスワード発行申請</h2>
+            </div>
+            <p>ゲームのダウンロードには、あなた専用の認証パスワードが必要です。</p>
+            <p>以下の申請フォームより必要事項を記入し、パスワードの発行を行ってください。発行されたパスワードはご登録のメールアドレスに送信されます。</p>
+            
+            <div class="form-container">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdAAGej3InQZHYsTiWW3B_gz9ejOkSBmINFWdI-kiWDYBp62w/viewform?embedded=true" width="640" height="582" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+            </div>
+        </section>
+
+        <section class="section download-section" id="download-section">
+            <div class="section-header">
+                <i class="fas fa-download icon-heading"></i>
+                <h2>ゲームのダウンロード</h2>
+            </div>
+            <p>発行されたパスワードをお持ちの方はこちらからゲームをダウンロードできます。</p>
+            <div class="password-input-area">
+                <input type="text" id="passwordInput" placeholder="認証パスワードを入力">
+                <button id="verifyPasswordButton" class="button button-primary">パスワードを認証</button>
+                <p id="passwordMessage" class="download-note" style="display: none;"></p>
+            </div>
+
+            <div id="downloadLinkArea" style="display: none;">
+                <p class="success-message">認証に成功しました！ゲームをダウンロードできます。</p>
+                <a href="#" id="gameDownloadLink" class="button button-download" target="_blank" download><i class="fas fa-file-download"></i> ゲームをダウンロード</a>
+                <p class="download-note-small"><i class="fas fa-exclamation-circle"></i> ※ダウンロードは一度限りです。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2025 ゆ虐ゲーム開発チーム. All Rights Reserved.</p>
+        <div class="social-links">
+            <a href="#" target="_blank" title="お問い合わせ"><i class="fas fa-envelope"></i> お問い合わせ</a> | 
+            <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i> Twitter</a> | 
+            <a href="https://discord.gg/JXnsT8GPxK" target="_blank" title="Discord"><i class="fab fa-discord"></i> Discord</a>
+        </div>
+    </footer>
+
+    <script>
+    // ★★★ ここにデプロイしたGoogle Apps ScriptのウェブアプリURLを貼り付ける ★★★
+    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbygeAhENL8_OeEX576h7_QS5U6FabrxPKoc8zdgAvnONwcTIlNA5iDhOVm0RI6MmyX-9Q/exec'; 
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const passwordInput = document.getElementById('passwordInput');
+        const verifyPasswordButton = document.getElementById('verifyPasswordButton');
+        const passwordMessage = document.getElementById('passwordMessage');
+        const downloadLinkArea = document.getElementById('downloadLinkArea');
+        const gameDownloadLink = document.getElementById('gameDownloadLink');
+
+        if (verifyPasswordButton) {
+            verifyPasswordButton.addEventListener('click', async () => {
+                const password = passwordInput.value;
+                if (!password) {
+                    passwordMessage.textContent = 'パスワードを入力してください。';
+                    passwordMessage.style.color = '#e74c3c'; // 赤色
+                    passwordMessage.style.display = 'block'; // メッセージを表示
+                    downloadLinkArea.style.display = 'none';
+                    return;
+                }
+
+                passwordMessage.textContent = '認証中...';
+                passwordMessage.style.color = '#607d8b'; // グレー
+                passwordMessage.style.display = 'block'; // メッセージを表示
+                downloadLinkArea.style.display = 'none'; // 認証中は非表示に
+                passwordInput.disabled = true; // 認証中は入力不可に
+                verifyPasswordButton.disabled = true; // 認証中はボタン無効に
+                verifyPasswordButton.textContent = '認証中...'; // ボタンテキスト変更
+
+                try {
+                    const response = await fetch(GAS_WEB_APP_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `password=${encodeURIComponent(password)}`
+                    });
+
+                    const data = await response.json(); // JSONとしてレスポンスを解析
+
+                    if (data.success) {
+                        passwordMessage.textContent = data.message;
+                        passwordMessage.style.color = '#2ecc71'; // エメラルドグリーン
+                        gameDownloadLink.href = data.downloadLink; // GASから受け取ったダウンロードリンクを設定
+                        downloadLinkArea.style.display = 'block'; // ダウンロードエリアを表示
+
+                        // 成功時はパスワード関連UIを完全に非表示に
+                        passwordInput.style.display = 'none';
+                        verifyPasswordButton.style.display = 'none';
+                        passwordMessage.style.display = 'none'; // メッセージも非表示に
+
+                    } else {
+                        passwordMessage.textContent = data.message;
+                        passwordMessage.style.color = '#e74c3c'; // 赤色
+                        passwordMessage.style.display = 'block'; // メッセージを表示
+                        downloadLinkArea.style.display = 'none';
+                        passwordInput.style.display = 'block'; // 再度表示
+                        verifyPasswordButton.style.display = 'inline-block'; // 再度表示
+                    }
+                } catch (error) {
+                    console.error('認証エラー:', error);
+                    passwordMessage.textContent = '認証中にエラーが発生しました。時間をおいてお試しください。';
+                    passwordMessage.style.color = '#e74c3c'; // 赤色
+                    passwordMessage.style.display = 'block'; // メッセージを表示
+                    downloadLinkArea.style.display = 'none';
+                } finally {
+                    passwordInput.disabled = false; // 無効化解除
+                    verifyPasswordButton.disabled = false; // 無効化解除
+                    verifyPasswordButton.textContent = 'パスワードを認証'; // ボタンテキスト戻す
+                    // エラー時もメッセージは表示される
+                }
+            });
+        }
+
+        // スムーズスクロールの追加
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // ヘッダーの高さ分スクロール位置を調整
+                const headerOffset = document.querySelector('.main-nav').offsetHeight;
+                const element = document.querySelector(this.getAttribute('href'));
+                const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            });
+        });
+    });
+    </script>
+</body>
+</html>
