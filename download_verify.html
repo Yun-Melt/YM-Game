@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ダウンロード認証 - ゆ虐ゲーム</title>
+    <link rel="stylesheet" href="style.css"> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M_PLUS_Rounded_1c:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            border-top: 6px solid #2ecc71;
+            margin: 20px; /* 小画面での余白 */
+        }
+        h2 {
+            font-family: 'M_PLUS_Rounded_1c', sans-serif;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 25px;
+        }
+        p {
+            font-size: 1.1em;
+            color: #3f516d;
+            margin-bottom: 20px;
+        }
+        .message {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none; /* 初期は非表示 */
+        }
+        .message.loading {
+            background-color: #e3f2fd;
+            color: #2196f3;
+            display: block;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #28a745;
+            display: block;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #dc3545;
+            display: block;
+        }
+        .download-button-area {
+            margin-top: 30px;
+        }
+        .button-download {
+            background-color: #2ecc71;
+        }
+        .button-download:hover {
+            background-color: #27ae60;
+        }
+        .button-primary { /* 公式サイトに戻るボタン用 */
+            background-color: #3498db;
+        }
+        .button-primary:hover {
+            background-color: #2980b9;
+        }
+        /* スタイルシートの既存の .button クラスも適用される */
+        .button { /* style.cssからコピーまたはインクルード */
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin: 10px 5px;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ダウンロード認証</h2>
+        <p id="statusMessage">ダウンロード準備中... しばらくお待ちください。</p>
+        <div id="downloadArea" style="display: none;">
+            <p class="message success">認証に成功しました！以下のボタンからゲームをダウンロードしてください。</p>
+            <div class="download-button-area">
+                <a href="#" id="finalDownloadLink" class="button button-download" target="_blank" download><i class="fas fa-file-download"></i> ゲームをダウンロード</a>
+            </div>
+            <p class="download-note-small"><i class="fas fa-exclamation-circle"></i> ※ダウンロードは一度限りです。不正利用を防ぐため、ダウンロードリンクは限定された時間・回数のみ有効です。</p>
+        </div>
+        <div id="errorArea" style="display: none;">
+            <p class="message error">認証に失敗しました。このリンクは無効か、すでに使用されています。</p>
+            <p>再度、公式サイトに戻り、パスワード認証からやり直してください。</p>
+            <div class="download-button-area">
+                 <a href="index.html" class="button button-primary"><i class="fas fa-home"></i> 公式サイトに戻る</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ★★★ ここにトークン検証とファイルダウンロードリンク提供を行うGoogle Apps ScriptのウェブアプリURLを貼り付ける ★★★
+        const GAS_WEB_APP_URL_FOR_TOKEN_VERIFY = 'https://script.google.com/macros/s/AKfycbwWreyPmeS_T0LlJfF8CkblByx4JiNJrUaUwIayoE9vGQYGvC3PO7sXVRRJl3VOwy_B/exec'; // 例: 'https://script.google.com/macros/s/yyyyyyyyyyyyyyyyyyyyyyyyyyyyy/exec';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token'); // URLからトークンを取得
+
+            const statusMessage = document.getElementById('statusMessage');
+            const downloadArea = document.getElementById('downloadArea');
+            const errorArea = document.getElementById('errorArea');
+            const finalDownloadLink = document.getElementById('finalDownloadLink');
+
+            // トークンがURLに存在しない場合
+            if (!token) {
+                statusMessage.style.display = 'none';
+                errorArea.style.display = 'block';
+                return;
+            }
+
+            // 初期表示：ロード中メッセージ
+            statusMessage.textContent = 'トークンを検証中...';
+            statusMessage.classList.add('loading');
+            downloadArea.style.display = 'none';
+            errorArea.style.display = 'none';
+
+            try {
+                // GASのトークン検証用ウェブアプリにリクエストを送信
+                const response = await fetch(GAS_WEB_APP_URL_FOR_TOKEN_VERIFY, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `token=${encodeURIComponent(token)}` // 抽出したトークンをGASに送る
+                });
+
+                const data = await response.json(); // GASからのJSON応答を解析
+
+                if (data.success && data.downloadLink) {
+                    // 認証成功
+                    statusMessage.style.display = 'none'; // ロード中メッセージを非表示
+                    downloadArea.style.display = 'block'; // ダウンロードエリアを表示
+                    finalDownloadLink.href = data.downloadLink; // 実際のゲームダウンロードURLを設定
+                } else {
+                    // 認証失敗
+                    statusMessage.style.display = 'none';
+                    errorArea.style.display = 'block'; // エラーエリアを表示
+                    console.error('トークン検証失敗:', data.message || '不明なエラー');
+                }
+            } catch (error) {
+                // 通信エラー
+                console.error('トークン検証通信エラー:', error);
+                statusMessage.style.display = 'none';
+                errorArea.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
