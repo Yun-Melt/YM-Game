@@ -121,7 +121,7 @@
 
     <script>
         // ★★★ ここにトークン検証とファイルダウンロードリンク提供を行うGoogle Apps ScriptのウェブアプリURLを貼り付ける ★★★
-        const GAS_WEB_APP_URL_FOR_TOKEN_VERIFY = 'https://script.google.com/macros/s/AKfycbzb5uP9ZA-TaMkZjk-hOuh9EDhfAb6knMw6sQVZDP6K0qMZbWpKTHZrHW99n-4oG0uL/exec'; 
+        const GAS_WEB_APP_URL_FOR_TOKEN_VERIFY = 'https://script.google.com/macros/s/AKfycbzNvaZxkbIvFQ1-k0dTkyteY3AyiQNYZoRm4tQqcyZhQaAuzELVAXuy7kSW7K43ahTN/exec'; 
 
         document.addEventListener('DOMContentLoaded', async () => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -165,6 +165,7 @@
                 }
             } catch (error) {
                 console.error('トークン検証通信エラー:', error);
+                alert('トークン検証中にエラーが発生しました。\nもしかしたらCORSエラーが発生している可能性があります。');
                 statusMessage.style.display = 'none';
                 errorArea.style.display = 'block';
             }
