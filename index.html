@@ -36,7 +36,7 @@
             </div>
             <div class="content-flex">
                 <div class="text-block">
-                    <p>「ゆ虐ゲーム」は、愛らしいゆっくり達の生態に触れ、彼らの**儚くも鮮烈な一生**を追体験するインタラクティブノベルです。プレイヤーの選択一つ一つが、ゆっくり達の幸福と絶望、そして残酷な運命を決定づけます。</p>
+                    <p>「ゆ虐ゲーム」は、愛らしいゆっくり達の生態に触れ、彼らの**儚くも鮮烈な一生**を追体験するインタラクティブノベルです。</p>
                     <p>単なる育成シミュレーションに留まらず、深いストーリーラインと多岐にわたるエンディングが、あなたの心を揺さぶります。彼らの世界の「真実」を、あなたの手で解き明かしてください。</p>
                 </div>
                 <div class="image-block">
@@ -104,9 +104,9 @@
             </div>
 
             <div id="downloadLinkArea" style="display: none;">
-                <p class="success-message">認証に成功しました！（現在はダウンロードできません。開発中です。）</p>
-                <a href="#" id="gameDownloadLink" class="button button-download" target="_blank" download><i class="fas fa-file-download"></i> ゲームをダウンロード</a>
-                <p class="download-note-small"><i class="fas fa-exclamation-circle"></i> ※ダウンロードは一度限りです。</p>
+                <p class="success-message">認証に成功しました！ダウンロード準備中...</p>
+                <a href="#" id="gameDownloadLink" class="button button-download"><i class="fas fa-file-download"></i> ダウンロードを開始</a>
+                <p class="download-note-small"><i class="fas fa-exclamation-circle"></i> ※このボタンを押すと、ダウンロードページへ移動します。</p>
             </div>
         </section>
     </main>
@@ -121,86 +121,151 @@
     </footer>
 
     <script>
-    // ★★★ ここにデプロイしたGoogle Apps ScriptのウェブアプリURLを貼り付ける ★★★
-    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbygeAhENL8_OeEX576h7_QS5U6FabrxPKoc8zdgAvnONwcTIlNA5iDhOVm0RI6MmyX-9Q/exec'; 
+    // ★★★ ここにトークン発行とスプレッドシートへの記録を行うGoogle Apps ScriptのウェブアプリURLを貼り付ける ★★★
+    // これは以前のパスワード認証とは別のエンドポイントになるはずです。
+    const GAS_WEB_APP_URL_FOR_TOKEN_ISSUE = 'https://script.google.com/macros/s/AKfycbyOdcKNOVo5EjDhw6bXB4Bda_ZcpbQk2V6galXeZdKwOZgs9Ny4kqjZf6v5puA2axz1/exec'; // 例: 'https://script.google.com/macros/s/xxxxxxxxxxxxxxxxxxxxxxxxxxxxx/exec';
+    
+    // トークン検証ページへのURL（GitHub Pagesなどでホスト）
+    const TOKEN_VERIFY_PAGE_URL = 'https://yun-melt.github.io/YM-Game/download_verify.html'; // 例: 'https://username.github.io/game-site/download_verify.html'
 
     document.addEventListener('DOMContentLoaded', () => {
         const passwordInput = document.getElementById('passwordInput');
         const verifyPasswordButton = document.getElementById('verifyPasswordButton');
         const passwordMessage = document.getElementById('passwordMessage');
         const downloadLinkArea = document.getElementById('downloadLinkArea');
-        const gameDownloadLink = document.getElementById('gameDownloadLink');
+        const gameDownloadLinkButton = document.getElementById('gameDownloadLink'); // aタグをボタンとして扱う
 
+        // パスワード認証部分 (変更なし)
         if (verifyPasswordButton) {
             verifyPasswordButton.addEventListener('click', async () => {
                 const password = passwordInput.value;
                 if (!password) {
                     passwordMessage.textContent = 'パスワードを入力してください。';
-                    passwordMessage.style.color = '#e74c3c'; // 赤色
-                    passwordMessage.style.display = 'block'; // メッセージを表示
+                    passwordMessage.style.color = '#e74c3c';
+                    passwordMessage.style.display = 'block';
                     downloadLinkArea.style.display = 'none';
                     return;
                 }
 
                 passwordMessage.textContent = '認証中...';
-                passwordMessage.style.color = '#607d8b'; // グレー
-                passwordMessage.style.display = 'block'; // メッセージを表示
-                downloadLinkArea.style.display = 'none'; // 認証中は非表示に
-                passwordInput.disabled = true; // 認証中は入力不可に
-                verifyPasswordButton.disabled = true; // 認証中はボタン無効に
-                verifyPasswordButton.textContent = '認証中...'; // ボタンテキスト変更
+                passwordMessage.style.color = '#607d8b';
+                passwordMessage.style.display = 'block';
+                downloadLinkArea.style.display = 'none';
+                passwordInput.disabled = true;
+                verifyPasswordButton.disabled = true;
+                verifyPasswordButton.textContent = '認証中...';
 
                 try {
-                    const response = await fetch(GAS_WEB_APP_URL, {
+                    const response = await fetch(GAS_WEB_APP_URL_FOR_TOKEN_ISSUE, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        body: `password=${encodeURIComponent(password)}`
+                        // ここでIPアドレスやUser-AgentをGASに送る（任意、GAS側で受け取るように設定する必要がある）
+                        body: `ipAddress=${encodeURIComponent('取得したIPアドレス')}&userAgent=${encodeURIComponent(navigator.userAgent)}`
+                        // IPアドレスはクライアント側JSでは正確に取得できないため、GAS側でEventオブジェクトから取得を試みるか、
+                        // プロキシサーバーなどを使用しない限り、ユーザーエージェントのみで十分な場合が多い。
+                        // IPアドレスの取得はGASのe.context.request.ipAddress (非推奨) や、GASのデプロイ環境によっては取得できない場合があるため注意
                     });
 
-                    const data = await response.json(); // JSONとしてレスポンスを解析
+                    const data = await response.json();
+
+                    if (data.success && data.token) {
+                        // トークンが正常に発行されたら、トークン付きURLにリダイレクト
+                        window.location.href = `${TOKEN_VERIFY_PAGE_URL}?token=${data.token}`;
+                    } else {
+                        alert('ダウンロードトークンの発行に失敗しました。時間をおいてお試しください。\n' + (data.message || '不明なエラー'));
+                        gameDownloadLinkButton.textContent = 'ダウンロードを開始';
+                        gameDownloadLinkButton.disabled = false;
+                        gameDownloadLinkButton.style.opacity = '1';
+                    }
+                } catch (error) {
+                    console.error('トークン発行エラー:', error);
+                    alert('トークン発行中にエラーが発生しました。時間をおいてお試しください。');
+                    gameDownloadLinkButton.textContent = 'ダウンロードを開始';
+                    gameDownloadLinkButton.disabled = false;
+                    gameDownloadLinkButton.style.opacity = '1';
+                }
+
+                    const data = await response.json();
 
                     if (data.success) {
                         passwordMessage.textContent = data.message;
-                        passwordMessage.style.color = '#2ecc71'; // エメラルドグリーン
-                        gameDownloadLink.href = data.downloadLink; // GASから受け取ったダウンロードリンクを設定
-                        downloadLinkArea.style.display = 'block'; // ダウンロードエリアを表示
+                        passwordMessage.style.color = '#2ecc71';
+                        // 認証成功後、ダウンロード開始ボタンを表示
+                        downloadLinkArea.style.display = 'block';
 
-                        // 成功時はパスワード関連UIを完全に非表示に
                         passwordInput.style.display = 'none';
                         verifyPasswordButton.style.display = 'none';
                         passwordMessage.style.display = 'none'; // メッセージも非表示に
 
                     } else {
                         passwordMessage.textContent = data.message;
-                        passwordMessage.style.color = '#e74c3c'; // 赤色
-                        passwordMessage.style.display = 'block'; // メッセージを表示
+                        passwordMessage.style.color = '#e74c3c';
+                        passwordMessage.style.display = 'block';
                         downloadLinkArea.style.display = 'none';
-                        passwordInput.style.display = 'block'; // 再度表示
-                        verifyPasswordButton.style.display = 'inline-block'; // 再度表示
+                        passwordInput.style.display = 'block';
+                        verifyPasswordButton.style.display = 'inline-block';
                     }
                 } catch (error) {
                     console.error('認証エラー:', error);
                     passwordMessage.textContent = '認証中にエラーが発生しました。時間をおいてお試しください。';
-                    passwordMessage.style.color = '#e74c3c'; // 赤色
-                    passwordMessage.style.display = 'block'; // メッセージを表示
+                    passwordMessage.style.color = '#e74c3c';
+                    passwordMessage.style.display = 'block';
                     downloadLinkArea.style.display = 'none';
                 } finally {
-                    passwordInput.disabled = false; // 無効化解除
-                    verifyPasswordButton.disabled = false; // 無効化解除
-                    verifyPasswordButton.textContent = 'パスワードを認証'; // ボタンテキスト戻す
-                    // エラー時もメッセージは表示される
+                    passwordInput.disabled = false;
+                    verifyPasswordButton.disabled = false;
+                    verifyPasswordButton.textContent = 'パスワードを認証';
                 }
             });
         }
 
-        // スムーズスクロールの追加
+        // 新しいダウンロード開始ボタンのクリックイベント
+        if (gameDownloadLinkButton) {
+            gameDownloadLinkButton.addEventListener('click', async (e) => {
+                e.preventDefault(); // デフォルトのリンク遷移を防止
+
+                gameDownloadLinkButton.textContent = 'トークン発行中...';
+                gameDownloadLinkButton.disabled = true;
+                gameDownloadLinkButton.style.opacity = '0.7';
+
+                try {
+                    const response = await (GAS_WEB_APP_URL_FOR_TOKEN_ISSUE, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        // 必要であれば、ここで認証済みのユーザー情報（例：セッションIDやパスワードなど、ただし非推奨）をGASに送る
+                        // body: `some_auth_data=${encodeURIComponent(yourAuthData)}`
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success && data.token) {
+                        // トークンが正常に発行されたら、トークン付きURLにリダイレクト
+                        window.location.href = `${TOKEN_VERIFY_PAGE_URL}?token=${data.token}`;
+                    } else {
+                        alert('ダウンロードトークンの発行に失敗しました。時間をおいてお試しください。\n' + (data.message || '不明なエラー'));
+                        gameDownloadLinkButton.textContent = 'ダウンロードを開始';
+                        gameDownloadLinkButton.disabled = false;
+                        gameDownloadLinkButton.style.opacity = '1';
+                    }
+                } catch (error) {
+                    console.error('トークン発行エラー:', error);
+                    alert('トークン発行中にエラーが発生しました。時間をおいてお試しください。');
+                    gameDownloadLinkButton.textContent = 'ダウンロードを開始';
+                    gameDownloadLinkButton.disabled = false;
+                    gameDownloadLinkButton.style.opacity = '1';
+                }
+            });
+        }
+
+        // スムーズスクロールの追加 (変更なし)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
 
-                // ヘッダーの高さ分スクロール位置を調整
                 const headerOffset = document.querySelector('.main-nav').offsetHeight;
                 const element = document.querySelector(this.getAttribute('href'));
                 const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
