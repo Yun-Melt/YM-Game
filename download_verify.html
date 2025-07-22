@@ -106,9 +106,9 @@
         <div id="downloadArea" style="display: none;">
             <p class="message success">認証に成功しました！以下のボタンからゲームをダウンロードしてください。</p>
             <div class="download-button-area">
-                <a href="#" id="finalDownloadLink" class="button button-download" target="_blank" download><i class="fas fa-file-download"></i> ゲームをダウンロード</a>
+                <button id="finalDownloadLink" class="button button-download"><i class="fas fa-file-download"></i> ゲームをダウンロード</button>
             </div>
-            <p class="download-note-small"><i class="fas fa-exclamation-circle"></i> ※ダウンロードは一度限りです。不正利用を防ぐため、ダウンロードリンクは限定された時間・回数のみ有効です。</p>
+            <p class="download-note-small"><i class="fas fa-exclamation-circle"></i> ※ダウンロードは一度限りです。不正利用を防ぐため、このダウンロードは一回限り有効です。</p>
         </div>
         <div id="errorArea" style="display: none;">
             <p class="message error">認証に失敗しました。このリンクは無効か、すでに使用されています。</p>
@@ -120,7 +120,8 @@
     </div>
 
     <script>
-        // ★★★ ここにトークン検証とファイルダウンロードリンク提供を行うGoogle Apps ScriptのウェブアプリURLを貼り付ける ★★★
+        // ★★★ ここにトークン検証とファイルダウンロード提供を行うGoogle Apps ScriptのウェブアプリURLを貼り付ける ★★★
+        // doPost と doGet は同じウェブアプリURLで処理されます。
         const GAS_WEB_APP_URL_FOR_TOKEN_VERIFY = 'https://script.google.com/macros/s/AKfycbzNvaZxkbIvFQ1-k0dTkyteY3AyiQNYZoRm4tQqcyZhQaAuzELVAXuy7kSW7K43ahTN/exec'; 
 
         document.addEventListener('DOMContentLoaded', async () => {
@@ -130,7 +131,7 @@
             const statusMessage = document.getElementById('statusMessage');
             const downloadArea = document.getElementById('downloadArea');
             const errorArea = document.getElementById('errorArea');
-            const finalDownloadLink = document.getElementById('finalDownloadLink');
+            const finalDownloadLinkButton = document.getElementById('finalDownloadLink'); // ボタンの参照を更新
 
             if (!token) {
                 statusMessage.style.display = 'none';
@@ -144,6 +145,7 @@
             errorArea.style.display = 'none';
 
             try {
+                // トークンの検証（POSTリクエスト）
                 const response = await fetch(GAS_WEB_APP_URL_FOR_TOKEN_VERIFY, {
                     method: 'POST',
                     headers: {
@@ -154,10 +156,16 @@
 
                 const data = await response.json(); 
 
-                if (data.success && data.downloadLink) {
+                if (data.success) {
                     statusMessage.style.display = 'none'; 
                     downloadArea.style.display = 'block'; 
-                    finalDownloadLink.href = data.downloadLink; 
+                    
+                    // ダウンロードボタンにクリックイベントを設定
+                    finalDownloadLinkButton.addEventListener('click', () => {
+                        // GASのdoGetを呼び出すURLにブラウザをリダイレクトし、ファイルダウンロードを開始させる
+                        window.location.href = `${GAS_WEB_APP_URL_FOR_TOKEN_VERIFY}?token=${token}`;
+                    });
+
                 } else {
                     statusMessage.style.display = 'none';
                     errorArea.style.display = 'block'; 
