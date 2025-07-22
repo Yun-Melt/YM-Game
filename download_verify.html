@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=M_PLUS_Rounded_1c:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* download_verify.html 用の追加・上書きスタイル */
         body {
             display: flex;
             justify-content: center;
@@ -65,18 +66,7 @@
         }
         .button-download {
             background-color: #2ecc71;
-        }
-        .button-download:hover {
-            background-color: #27ae60;
-        }
-        .button-primary { /* 公式サイトに戻るボタン用 */
-            background-color: #3498db;
-        }
-        .button-primary:hover {
-            background-color: #2980b9;
-        }
-        /* スタイルシートの既存の .button クラスも適用される */
-        .button { /* style.cssからコピーまたはインクルード */
+            /* style.cssの.buttonの基本的なスタイルをここにもコピーして、単体でも動作するように */
             display: inline-block;
             padding: 12px 25px;
             font-size: 1.1em;
@@ -88,6 +78,28 @@
             cursor: pointer;
             border: none;
         }
+        .button-download:hover {
+            background-color: #27ae60;
+        }
+        .button-primary { /* 公式サイトに戻るボタン用 */
+            background-color: #3498db;
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin: 10px 5px;
+            cursor: pointer;
+            border: none;
+        }
+        .button-primary:hover {
+            background-color: #2980b9;
+        }
+        /* style.cssからコピーまたはインクルードする共通ボタンの基本スタイル */
+        /* もしstyle.cssが分離されていて、download_verify.htmlもstyle.cssを読み込むのであれば、上記の重複は不要です。
+           今回は分離を想定しつつ、このファイル単体でもボタンが見えるように記述しています。*/
     </style>
 </head>
 <body>
