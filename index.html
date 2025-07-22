@@ -122,11 +122,13 @@
 
     <script>
     // ★★★ ここにトークン発行とスプレッドシートへの記録を行うGoogle Apps ScriptのウェブアプリURLを貼り付ける ★★★
-    // これは以前のパスワード認証とは別のエンドポイントになるはずです。
+    // これは以前のパスワード認証とは別のエンドポイントになります。
     const GAS_WEB_APP_URL_FOR_TOKEN_ISSUE = 'https://script.google.com/macros/s/AKfycbyOdcKNOVo5EjDhw6bXB4Bda_ZcpbQk2V6galXeZdKwOZgs9Ny4kqjZf6v5puA2axz1/exec'; // 例: 'https://script.google.com/macros/s/xxxxxxxxxxxxxxxxxxxxxxxxxxxxx/exec';
     
     // トークン検証ページへのURL（GitHub Pagesなどでホスト）
-    const TOKEN_VERIFY_PAGE_URL = 'https://yun-melt.github.io/YM-Game/download_verify.html'; // 例: 'https://username.github.io/game-site/download_verify.html'
+    // このURLは、あなたのGitHub Pagesのリポジトリ名によって変わります。
+    // 例: 'https://あなたのGitHubユーザー名.github.io/あなたのリポジトリ名/download_verify.html'
+    const TOKEN_VERIFY_PAGE_URL = 'https://yun-melt.github.io/YM-Game/download_verify.html'; 
 
     document.addEventListener('DOMContentLoaded', () => {
         const passwordInput = document.getElementById('passwordInput');
@@ -135,7 +137,7 @@
         const downloadLinkArea = document.getElementById('downloadLinkArea');
         const gameDownloadLinkButton = document.getElementById('gameDownloadLink'); // aタグをボタンとして扱う
 
-        // パスワード認証部分 (変更なし)
+        // パスワード認証部分 (既存のGASウェブアプリURLを使用)
         if (verifyPasswordButton) {
             verifyPasswordButton.addEventListener('click', async () => {
                 const password = passwordInput.value;
@@ -156,36 +158,15 @@
                 verifyPasswordButton.textContent = '認証中...';
 
                 try {
-                    const response = await fetch(GAS_WEB_APP_URL_FOR_TOKEN_ISSUE, {
+                    // ここは従来のパスワード認証用のGASウェブアプリURLを使用
+                    // 適切なURLに置き換えてください（もし既存の認証システムがあれば）
+                    const response = await fetch('https://script.google.com/macros/s/AKfycbygeAhENL8_OeEX576h7_QS5U6FabrxPKoc8zdgAvnONwcTIlNA5iDhOVm0RI6MmyX-9Q/exec', { 
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        // ここでIPアドレスやUser-AgentをGASに送る（任意、GAS側で受け取るように設定する必要がある）
-                        body: `ipAddress=${encodeURIComponent('取得したIPアドレス')}&userAgent=${encodeURIComponent(navigator.userAgent)}`
-                        // IPアドレスはクライアント側JSでは正確に取得できないため、GAS側でEventオブジェクトから取得を試みるか、
-                        // プロキシサーバーなどを使用しない限り、ユーザーエージェントのみで十分な場合が多い。
-                        // IPアドレスの取得はGASのe.context.request.ipAddress (非推奨) や、GASのデプロイ環境によっては取得できない場合があるため注意
+                        body: `password=${encodeURIComponent(password)}`
                     });
-
-                    const data = await response.json();
-
-                    if (data.success && data.token) {
-                        // トークンが正常に発行されたら、トークン付きURLにリダイレクト
-                        window.location.href = `${TOKEN_VERIFY_PAGE_URL}?token=${data.token}`;
-                    } else {
-                        alert('ダウンロードトークンの発行に失敗しました。時間をおいてお試しください。\n' + (data.message || '不明なエラー'));
-                        gameDownloadLinkButton.textContent = 'ダウンロードを開始';
-                        gameDownloadLinkButton.disabled = false;
-                        gameDownloadLinkButton.style.opacity = '1';
-                    }
-                } catch (error) {
-                    console.error('トークン発行エラー:', error);
-                    alert('トークン発行中にエラーが発生しました。時間をおいてお試しください。');
-                    gameDownloadLinkButton.textContent = 'ダウンロードを開始';
-                    gameDownloadLinkButton.disabled = false;
-                    gameDownloadLinkButton.style.opacity = '1';
-                }
 
                     const data = await response.json();
 
@@ -208,7 +189,7 @@
                         verifyPasswordButton.style.display = 'inline-block';
                     }
                 } catch (error) {
-                    console.error('認証エラー:', error);
+                    console.error('パスワード認証エラー:', error);
                     passwordMessage.textContent = '認証中にエラーが発生しました。時間をおいてお試しください。';
                     passwordMessage.style.color = '#e74c3c';
                     passwordMessage.style.display = 'block';
@@ -231,13 +212,17 @@
                 gameDownloadLinkButton.style.opacity = '0.7';
 
                 try {
-                    const response = await (GAS_WEB_APP_URL_FOR_TOKEN_ISSUE, {
+                    const response = await fetch(GAS_WEB_APP_URL_FOR_TOKEN_ISSUE, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
                         // 必要であれば、ここで認証済みのユーザー情報（例：セッションIDやパスワードなど、ただし非推奨）をGASに送る
                         // body: `some_auth_data=${encodeURIComponent(yourAuthData)}`
+                        // IPアドレスやUser-Agentを送りたい場合（GAS側で受け取るように実装が必要）
+                        // body: `ipAddress=${encodeURIComponent('実際のIPアドレスをここに入れる')}&userAgent=${encodeURIComponent(navigator.userAgent)}`
+                        // 注: JavaScriptでクライアントの正確なIPアドレスを取得するのは難しいです。
+                        // GAS側でイベントオブジェクトから取得を試みるのが一般的ですが、GASの環境によっては取得できない場合もあります。
                     });
 
                     const data = await response.json();
