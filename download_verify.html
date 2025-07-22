@@ -97,9 +97,6 @@
         .button-primary:hover {
             background-color: #2980b9;
         }
-        /* style.cssからコピーまたはインクルードする共通ボタンの基本スタイル */
-        /* もしstyle.cssが分離されていて、download_verify.htmlもstyle.cssを読み込むのであれば、上記の重複は不要です。
-           今回は分離を想定しつつ、このファイル単体でもボタンが見えるように記述しています。*/
     </style>
 </head>
 <body>
@@ -124,55 +121,49 @@
 
     <script>
         // ★★★ ここにトークン検証とファイルダウンロードリンク提供を行うGoogle Apps ScriptのウェブアプリURLを貼り付ける ★★★
-        const GAS_WEB_APP_URL_FOR_TOKEN_VERIFY = 'https://script.google.com/macros/s/AKfycbzb5uP9ZA-TaMkZjk-hOuh9EDhfAb6knMw6sQVZDP6K0qMZbWpKTHZrHW99n-4oG0uL/exec'; // 例: 'https://script.google.com/macros/s/yyyyyyyyyyyyyyyyyyyyyyyyyyyyy/exec';
+        const GAS_WEB_APP_URL_FOR_TOKEN_VERIFY = 'https://script.google.com/macros/s/AKfycbzb5uP9ZA-TaMkZjk-hOuh9EDhfAb6knMw6sQVZDP6K0qMZbWpKTHZrHW99n-4oG0uL/exec'; 
 
         document.addEventListener('DOMContentLoaded', async () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token'); // URLからトークンを取得
+            const token = urlParams.get('token'); 
 
             const statusMessage = document.getElementById('statusMessage');
             const downloadArea = document.getElementById('downloadArea');
             const errorArea = document.getElementById('errorArea');
             const finalDownloadLink = document.getElementById('finalDownloadLink');
 
-            // トークンがURLに存在しない場合
             if (!token) {
                 statusMessage.style.display = 'none';
                 errorArea.style.display = 'block';
                 return;
             }
 
-            // 初期表示：ロード中メッセージ
             statusMessage.textContent = 'トークンを検証中...';
             statusMessage.classList.add('loading');
             downloadArea.style.display = 'none';
             errorArea.style.display = 'none';
 
             try {
-                // GASのトークン検証用ウェブアプリにリクエストを送信
                 const response = await fetch(GAS_WEB_APP_URL_FOR_TOKEN_VERIFY, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: `token=${encodeURIComponent(token)}` // 抽出したトークンをGASに送る
+                    body: `token=${encodeURIComponent(token)}`
                 });
 
-                const data = await response.json(); // GASからのJSON応答を解析
+                const data = await response.json(); 
 
                 if (data.success && data.downloadLink) {
-                    // 認証成功
-                    statusMessage.style.display = 'none'; // ロード中メッセージを非表示
-                    downloadArea.style.display = 'block'; // ダウンロードエリアを表示
-                    finalDownloadLink.href = data.downloadLink; // 実際のゲームダウンロードURLを設定
+                    statusMessage.style.display = 'none'; 
+                    downloadArea.style.display = 'block'; 
+                    finalDownloadLink.href = data.downloadLink; 
                 } else {
-                    // 認証失敗
                     statusMessage.style.display = 'none';
-                    errorArea.style.display = 'block'; // エラーエリアを表示
+                    errorArea.style.display = 'block'; 
                     console.error('トークン検証失敗:', data.message || '不明なエラー');
                 }
             } catch (error) {
-                // 通信エラー
                 console.error('トークン検証通信エラー:', error);
                 statusMessage.style.display = 'none';
                 errorArea.style.display = 'block';
